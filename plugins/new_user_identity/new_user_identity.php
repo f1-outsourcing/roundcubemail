@@ -32,8 +32,10 @@ class new_user_identity extends rcube_plugin
             if (count($results->records) == 1) {
                 $user_name  = is_array($results->records[0]['name']) ? $results->records[0]['name'][0] : $results->records[0]['name'];
                 $user_email = is_array($results->records[0]['email']) ? $results->records[0]['email'][0] : $results->records[0]['email'];
+                $user_organization = is_array($results->records[0]['organization']) ? $results->records[0]['organization'][0] : $results->records[0]['organization'];
 
                 $args['user_name']  = $user_name;
+                $args['user_organization']  = $user_organization;
                 $args['email_list'] = array();
 
                 if (!$args['user_email'] && strpos($user_email, '@')) {
@@ -85,6 +87,7 @@ class new_user_identity extends rcube_plugin
                     'user_id'  => $this->rc->user->ID,
                     'standard' => 0,
                     'email'    => $email,
+                    'organization' => $ldap_entry['user_organization'],
                     'name'     => $ldap_entry['user_name']
                 ),
             ));
